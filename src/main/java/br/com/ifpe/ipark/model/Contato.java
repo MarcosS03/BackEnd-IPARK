@@ -10,39 +10,34 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 
-
 @Entity
-@Table(name = "enderecos")
+@Table(name = "contatos")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Endereco {
-
-
+public class Contato {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "fone")
+    private String fone;
+    @Column(name = "whatsApp")
+    private String whatsApp;
 
-    @OneToOne(mappedBy = "endereco")
+    @ManyToOne
     private Estacionamento estacionamento;
 
     @ManyToOne
     private UsuarioEstacionamento usuarioEstacionamento;
-
-    private String rua;
-    private String numero;
-    private String cep;
-    private String cidade;
-    private String bairro;
-    private String estado;
-
 
     @CreationTimestamp
     private Instant creationTimeStamp;
 
     @UpdateTimestamp
     private Instant updateTimeStamp;
+
 
 
 }
