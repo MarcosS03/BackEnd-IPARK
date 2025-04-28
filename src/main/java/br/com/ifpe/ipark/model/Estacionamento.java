@@ -1,19 +1,18 @@
 package br.com.ifpe.ipark.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
-//@Getter
-//@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 @Table(name = "estacionamentos")
+@ToString
 public class Estacionamento {
 
 
@@ -25,29 +24,42 @@ public class Estacionamento {
     private String razaoSocial;
     @Column(name = "nomeFantasia")
     private String nomeFantasia;
-    @Column(name = "cpf_cnpj")
-    private String cpf_cnpj;
+
+    @Column(name = "cnpj")
+    private String cnpj;
+
     @Column(name = "tipoPessoa")
     private String tipoPessoa;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "usuario_id")
-    private UsuarioEstacionamento usuarioEstacionamento;
+    @OneToMany(mappedBy = "estacionamento", cascade = CascadeType.ALL)
+    private List<UsuarioEstacionamento> usuarioEstacionamento;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "endereco_id")
+    @OneToOne(mappedBy = "estacionamento", cascade = CascadeType.ALL)
     private Endereco endereco;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "estacionamento_id")
+    @OneToMany(mappedBy = "estacionamento", cascade = CascadeType.ALL)
     private List<Contato> contatos;
-
     @CreationTimestamp
     private Instant creationTimeStamp;
 
     @UpdateTimestamp
     private Instant updateTimeStamp;
 
+    public Estacionamento() {
+    }
+
+    public Estacionamento(Long id, String razaoSocial, String nomeFantasia, String cnpj, String tipoPessoa, List<UsuarioEstacionamento> usuarioEstacionamento, Endereco endereco, List<Contato> contatos, Instant creationTimeStamp, Instant updateTimeStamp) {
+        this.id = id;
+        this.razaoSocial = razaoSocial;
+        this.nomeFantasia = nomeFantasia;
+        this.cnpj = cnpj;
+        this.tipoPessoa = tipoPessoa;
+        this.usuarioEstacionamento = usuarioEstacionamento;
+        this.endereco = endereco;
+        this.contatos = contatos;
+        this.creationTimeStamp = creationTimeStamp;
+        this.updateTimeStamp = updateTimeStamp;
+    }
 
     public Long getId() {
         return id;
@@ -73,12 +85,20 @@ public class Estacionamento {
         this.nomeFantasia = nomeFantasia;
     }
 
-    public String getCpf_cnpj() {
-        return cpf_cnpj;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setCpf_cnpj(String cpf_cnpj) {
-        this.cpf_cnpj = cpf_cnpj;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
+    public List<UsuarioEstacionamento> getUsuarioEstacionamento() {
+        return usuarioEstacionamento;
+    }
+
+    public void setUsuarioEstacionamento(List<UsuarioEstacionamento> usuarioEstacionamento) {
+        this.usuarioEstacionamento = usuarioEstacionamento;
     }
 
     public String getTipoPessoa() {
@@ -87,14 +107,6 @@ public class Estacionamento {
 
     public void setTipoPessoa(String tipoPessoa) {
         this.tipoPessoa = tipoPessoa;
-    }
-
-    public UsuarioEstacionamento getUsuarioEstacionamento() {
-        return usuarioEstacionamento;
-    }
-
-    public void setUsuarioEstacionamento(UsuarioEstacionamento usuarioEstacionamento) {
-        this.usuarioEstacionamento = usuarioEstacionamento;
     }
 
     public Endereco getEndereco() {
