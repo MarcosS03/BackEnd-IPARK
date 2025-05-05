@@ -31,18 +31,23 @@ public class Estacionamento {
     @Column(name = "tipoPessoa")
     private String tipoPessoa;
 
-    @OneToMany(mappedBy = "estacionamento", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "estacionamento", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UsuarioEstacionamento> usuarioEstacionamento;
 
-    @OneToOne(mappedBy = "estacionamento", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "estacionamento", cascade = CascadeType.ALL, orphanRemoval = true)
     private Endereco endereco;
 
-    @OneToMany(mappedBy = "estacionamento", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "estacionamento", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Contato> contatos;
+
+    @OneToMany(mappedBy = "estacionamento", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vaga>vagas;
+
     @CreationTimestamp
     private Instant creationTimeStamp;
 
     @UpdateTimestamp
+    @Column(insertable = false)
     private Instant updateTimeStamp;
 
     public Estacionamento() {

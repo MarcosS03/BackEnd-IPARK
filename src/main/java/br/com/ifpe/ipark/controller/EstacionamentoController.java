@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +28,7 @@ public class EstacionamentoController {
         final String cnpjNovo = estacionamentoDTO.cnpj(); // Pega o CNPJ do DTO
 
         // Verifica se já existe um estacionamento com o mesmo CNPJ
-        List<Estacionamento> listaEstacionamentos = estacionamentoService.buscarCursoFull();
+        List<Estacionamento> listaEstacionamentos = estacionamentoService.buscarEstacionamentoFull();
         boolean cnpjExistente = listaEstacionamentos.stream()
                 .anyMatch(es -> es.getCnpj().equals(cnpjNovo));
 
@@ -49,10 +47,10 @@ public class EstacionamentoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object>buscarEstacionamento(@PathVariable Long id){
-        Optional<Estacionamento> estacionamentoOptional = estacionamentoService.buscarCursoPorId(id);
+        Optional<Estacionamento> estacionamentoOptional = estacionamentoService.buscarEstacionamentoPorId(id);
 
         if (estacionamentoOptional.isEmpty()) {
-            return ResponseEntity.badRequest().body("Não existe curso com o id informado");
+            return ResponseEntity.badRequest().body("Não existe estacionamento com o id informado");
         }
         var estacionamento = estacionamentoOptional.get();
         BeanUtils.copyProperties(estacionamentoOptional, estacionamento);

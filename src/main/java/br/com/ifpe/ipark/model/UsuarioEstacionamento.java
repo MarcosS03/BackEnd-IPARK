@@ -33,6 +33,7 @@ public class UsuarioEstacionamento {
     private Instant creationTimeStamp;
 
     @UpdateTimestamp
+    @Column(insertable = false)
     private Instant updateTimeStamp;
 
     public UsuarioEstacionamento() {

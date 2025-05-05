@@ -10,7 +10,7 @@ public record UsuarioEstacionamentoDTO(String nome,
                                        String cpf,
                                        String setor,
                                        String funcao,
-                                       EstacionamentoDTO estacionamento,
+                                       Long estacionamentoID,
                                        List<EnderecoDTO> endereco,
                                        List<ContatoDTO> contatos) {
 }

@@ -42,6 +42,7 @@ public class EstacionamentoService {
 
         estacionamento.setEndereco(endereco);
         estacionamento.setContatos(contatos);
+        estacionamento.setUpdateTimeStamp(null);
 
 
         estacionamentoRepository.save(estacionamento);
@@ -49,10 +50,10 @@ public class EstacionamentoService {
 
     }
 
-    public Optional<Estacionamento> buscarCursoPorId(Long id){
+    public Optional<Estacionamento> buscarEstacionamentoPorId(Long id){
         return estacionamentoRepository.findById(id);
     }
-    public List<Estacionamento> buscarCursoFull(){
+    public List<Estacionamento> buscarEstacionamentoFull(){
         return estacionamentoRepository.findAll();
     }
 }

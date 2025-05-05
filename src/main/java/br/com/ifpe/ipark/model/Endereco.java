@@ -1,5 +1,6 @@
 package br.com.ifpe.ipark.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -20,10 +21,12 @@ public class Endereco {
 
     @OneToOne
     @JoinColumn( name = "estacionamento_id")
+    @JsonIgnore
     private Estacionamento estacionamento;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
+    @JsonIgnore
     private UsuarioEstacionamento usuarioEstacionamento;
 
     private String rua;
@@ -38,6 +41,7 @@ public class Endereco {
     private Instant creationTimeStamp;
 
     @UpdateTimestamp
+    @Column(insertable = false)
     private Instant updateTimeStamp;
 
     public Endereco() {
