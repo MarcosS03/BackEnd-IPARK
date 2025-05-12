@@ -26,7 +26,7 @@ public class UsuarioEstacionamento {
     private List<Endereco> enderecoList;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "estacionamento_id")
     private Estacionamento estacionamento;
 
     @CreationTimestamp

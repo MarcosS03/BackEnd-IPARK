@@ -14,14 +14,14 @@ public class Vaga {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String descricão;
+
     private String tipoVaga;
     private String valor;
     private String quantidade;
     private String statuVaga;
 
     @ManyToOne
-    @JoinColumn(name = "estacionamento_id")
+    @JoinColumn(name = "estacionamento_id", nullable = false)
     private Estacionamento estacionamento;
 
     @CreationTimestamp
@@ -42,9 +42,8 @@ public class Vaga {
     public Vaga() {
     }
 
-    public Vaga(Long id, String descricão, String tipoVaga, String valor, String quantidade, String statuVaga, Estacionamento estacionamento, Instant creationTimeStamp, Instant updateTimeStamp) {
+    public Vaga(Long id, String tipoVaga, String valor, String quantidade, String statuVaga, Estacionamento estacionamento, Instant creationTimeStamp, Instant updateTimeStamp) {
         this.id = id;
-        this.descricão = descricão;
         this.tipoVaga = tipoVaga;
         this.valor = valor;
         this.quantidade = quantidade;
@@ -84,14 +83,6 @@ public class Vaga {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getDescricão() {
-        return descricão;
-    }
-
-    public void setDescricão(String descricão) {
-        this.descricão = descricão;
     }
 
     public String getTipoVaga() {

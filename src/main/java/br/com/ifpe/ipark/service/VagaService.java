@@ -46,13 +46,20 @@ public class VagaService {
     }
 
     public Vaga atualizarVaga(Long id, VagaDTO vagaDTO){
+        Estacionamento estacionamento = estacionamentoRepository
+                .findById(vagaDTO.estacionamentoID())
+                .orElseThrow(() -> new RuntimeException("ID do Estacionamento não encontrado"));
+        System.out.println(estacionamento+ "teste de print");
         Optional<Vaga> vagaOptional = vagaRepository.findById(id);
+
+
         if (vagaOptional.isEmpty()) {
             throw new RuntimeException("Usuário com ID " + id + " não encontrado.");
         }
         Vaga vaga = new Vaga();
         BeanUtils.copyProperties(vagaDTO, vaga);
         vaga.setId(id);
+        vaga.setEstacionamento(estacionamento);
         return vagaRepository.save(vaga);
     }
 

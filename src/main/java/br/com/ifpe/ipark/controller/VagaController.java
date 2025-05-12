@@ -2,7 +2,6 @@ package br.com.ifpe.ipark.controller;
 
 
 import br.com.ifpe.ipark.dto.VagaDTO;
-import br.com.ifpe.ipark.model.Estacionamento;
 import br.com.ifpe.ipark.model.Vaga;
 import br.com.ifpe.ipark.service.VagaService;
 import org.springframework.beans.BeanUtils;
@@ -21,7 +20,7 @@ public class VagaController {
     @Autowired
     private VagaService vagaService;
 
-    @PostMapping
+    @PostMapping("/insert")
     public ResponseEntity<Object> cadastraVaga(@RequestBody VagaDTO vagaDTO, UriComponentsBuilder uriComponentsBuilder) {
 
         Vaga vaga = vagaService.save(vagaDTO);
@@ -56,7 +55,7 @@ public class VagaController {
     }
 
     @PutMapping("/updateVaga/{id}")
-    public ResponseEntity<Object> cadastraVaga(@PathVariable Long id, @RequestBody VagaDTO vagaDTO, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<Object> AtualizarVaga(@PathVariable Long id, @RequestBody VagaDTO vagaDTO, UriComponentsBuilder uriComponentsBuilder) {
 
         Vaga vagaAtualizado = vagaService.atualizarVaga(id, vagaDTO);
         var uri = uriComponentsBuilder.path("/vaga/{id}")
