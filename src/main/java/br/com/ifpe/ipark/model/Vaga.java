@@ -1,19 +1,22 @@
 package br.com.ifpe.ipark.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.util.List;
 
 @Entity
-@Table(name = "vagas")
+@Table(name = "cadastroVagas")
 public class Vaga {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     private String tipoVaga;
     private String valor;
@@ -22,7 +25,12 @@ public class Vaga {
 
     @ManyToOne
     @JoinColumn(name = "estacionamento_id", nullable = false)
+    @JsonIgnoreProperties({"vagas", "listaVagas", "usuarioEstacionamento", "endereco", "contatos"})
     private Estacionamento estacionamento;
+
+//    @OneToMany(mappedBy = "cadastroVagaId", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<ListaVagas> listaVagas;
+
 
     @CreationTimestamp
     private Instant creationTimeStamp;
@@ -30,6 +38,7 @@ public class Vaga {
     @UpdateTimestamp
     @Column(insertable = false)
     private Instant updateTimeStamp;
+
 
     public Estacionamento getEstacionamento() {
         return estacionamento;
@@ -42,7 +51,7 @@ public class Vaga {
     public Vaga() {
     }
 
-    public Vaga(Long id, String tipoVaga, String valor, String quantidade, String statuVaga, Estacionamento estacionamento, Instant creationTimeStamp, Instant updateTimeStamp) {
+    public Vaga(Long id, String tipoVaga, String valor, String quantidade, String statuVaga, Estacionamento estacionamento,Instant creationTimeStamp, Instant updateTimeStamp) {
         this.id = id;
         this.tipoVaga = tipoVaga;
         this.valor = valor;

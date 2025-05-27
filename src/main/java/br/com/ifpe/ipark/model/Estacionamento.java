@@ -1,12 +1,12 @@
 package br.com.ifpe.ipark.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -41,7 +41,11 @@ public class Estacionamento {
     private List<Contato> contatos;
 
     @OneToMany(mappedBy = "estacionamento", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Vaga>vagas;
+
+    @OneToMany(mappedBy = "estacionamento", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ListaVagas>listaVagas;
 
     @CreationTimestamp
     private Instant creationTimeStamp;
@@ -53,7 +57,7 @@ public class Estacionamento {
     public Estacionamento() {
     }
 
-    public Estacionamento(Long id, String razaoSocial, String nomeFantasia, String cnpj, String tipoPessoa, List<UsuarioEstacionamento> usuarioEstacionamento, Endereco endereco, List<Contato> contatos, Instant creationTimeStamp, Instant updateTimeStamp) {
+    public Estacionamento(Long id, String razaoSocial, String nomeFantasia, String cnpj, String tipoPessoa, List<UsuarioEstacionamento> usuarioEstacionamento, Endereco endereco, List<Contato> contatos, List<Vaga> vagas, List<ListaVagas> listaVagas, Instant creationTimeStamp, Instant updateTimeStamp) {
         this.id = id;
         this.razaoSocial = razaoSocial;
         this.nomeFantasia = nomeFantasia;
@@ -62,8 +66,27 @@ public class Estacionamento {
         this.usuarioEstacionamento = usuarioEstacionamento;
         this.endereco = endereco;
         this.contatos = contatos;
+        this.vagas = vagas;
+        this.listaVagas = listaVagas;
         this.creationTimeStamp = creationTimeStamp;
         this.updateTimeStamp = updateTimeStamp;
+    }
+
+
+    public List<Vaga> getVagas() {
+        return vagas;
+    }
+
+    public void setVagas(List<Vaga> vagas) {
+        this.vagas = vagas;
+    }
+
+    public List<ListaVagas> getListaVagas() {
+        return listaVagas;
+    }
+
+    public void setListaVagas(List<ListaVagas> listaVagas) {
+        this.listaVagas = listaVagas;
     }
 
     public Long getId() {

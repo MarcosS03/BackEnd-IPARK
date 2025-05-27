@@ -1,54 +1,55 @@
 package br.com.ifpe.ipark.controller;
 
-
+import br.com.ifpe.ipark.dto.ListaVagasDTO;
 import br.com.ifpe.ipark.dto.VagaDTO;
-import br.com.ifpe.ipark.model.Vaga;
-import br.com.ifpe.ipark.service.VagaService;
+import br.com.ifpe.ipark.model.ListaVagas;
+import br.com.ifpe.ipark.service.ListaVagasService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
 import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/vaga")
-public class VagaController {
+@RequestMapping("/ListaVagas")
+public class ListaVagasConstroller {
 
     @Autowired
-    private VagaService vagaService;
+    private ListaVagasService vagaService;
 
     @PostMapping("/insert")
-    public ResponseEntity<Object> cadastraVaga(@RequestBody VagaDTO vagaDTO, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<Object> cadastraVaga(@RequestBody ListaVagasDTO vagaDTO, UriComponentsBuilder uriComponentsBuilder) {
 
-        Vaga vaga = vagaService.save(vagaDTO);
+        ListaVagas vaga = vagaService.save(vagaDTO);
 
-        var uri = uriComponentsBuilder.path("/vaga/{id}")
+        var uri = uriComponentsBuilder.path("/ListaVagas/{id}")
                 .buildAndExpand(vaga.getId())
                 .toUri();
         return ResponseEntity.created(uri).body(vaga);
     }
 
-    @GetMapping("/vagas/{id}")
+    @GetMapping("/ListaVagas/{id}")
     public ResponseEntity<Object>buscarVaga(@PathVariable Long id){
-        Optional<Vaga> vagaOptional = vagaService.buscarVagaPorId(id);
+        Optional<ListaVagas> vagaOptional = vagaService.buscarVagaPorId(id);
 
         if (vagaOptional.isEmpty()) {
             return ResponseEntity.badRequest().body("Não existe vaga com o id informado");
         }
-        var estacionamento = vagaOptional.get();
-        BeanUtils.copyProperties(vagaOptional, estacionamento);
-        return ResponseEntity.ok(estacionamento);
+        var vaga = vagaOptional.get();
+        BeanUtils.copyProperties(vagaOptional, vaga);
+        return ResponseEntity.ok(vaga);
     }
 
-    @GetMapping("/vagas")
+    @GetMapping("/ListaVagas")
     public ResponseEntity<Object>buscarVagaFull(){
-        List<Vaga> vagaList = vagaService.buscarVagaFull();
+        List<ListaVagas> vagaList = vagaService.buscarVagaFull();
 
         if (vagaList.isEmpty()) {
-            return ResponseEntity.badRequest().body("Não existe vaga cadastrada!");
+            return ResponseEntity.badRequest().body("Nenhuma vaga cadastrada!");
         }
         return ResponseEntity.ok(vagaList);
     }
@@ -56,8 +57,8 @@ public class VagaController {
     @PutMapping("/updateVaga/{id}")
     public ResponseEntity<Object> AtualizarVaga(@PathVariable Long id, @RequestBody VagaDTO vagaDTO, UriComponentsBuilder uriComponentsBuilder) {
 
-        Vaga vagaAtualizado = vagaService.atualizarVaga(id, vagaDTO);
-        var uri = uriComponentsBuilder.path("/vaga/{id}")
+        ListaVagas vagaAtualizado = vagaService.atualizarVaga(id, vagaDTO);
+        var uri = uriComponentsBuilder.path("/ListaVagas/{id}")
                 .buildAndExpand(vagaAtualizado.getId())
                 .toUri();
         return ResponseEntity.created(uri).body(vagaAtualizado);

@@ -1,5 +1,6 @@
 package br.com.ifpe.ipark.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -27,6 +28,7 @@ public class UsuarioEstacionamento {
 
     @ManyToOne
     @JoinColumn(name = "estacionamento_id")
+    @JsonIgnore
     private Estacionamento estacionamento;
 
     @CreationTimestamp
