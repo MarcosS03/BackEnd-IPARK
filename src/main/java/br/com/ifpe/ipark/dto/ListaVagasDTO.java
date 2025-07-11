@@ -5,7 +5,16 @@ public record ListaVagasDTO(
         String tipoVaga,
         String valor,
         String quantidade,
-        Long estacionamentoID
+        String statuVaga,
+        Long estacionamentoID,
+        Long veiculoEstacionadoID
 
 ) {
+    // Construtor Compacto
+    public ListaVagasDTO {
+        // Aqui também definimos o valor padrão:
+        // Se 'veiculoEstacionadoID' for nulo, ele vira '0L'.
+        // Caso contrário, mantém o valor original.
+        veiculoEstacionadoID = (veiculoEstacionadoID != null) ? veiculoEstacionadoID : 0L;
+    }
 }

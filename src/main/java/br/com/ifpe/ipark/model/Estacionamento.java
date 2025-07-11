@@ -1,5 +1,6 @@
 package br.com.ifpe.ipark.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.ToString;
@@ -41,11 +42,14 @@ public class Estacionamento {
     private List<Contato> contatos;
 
     @OneToMany(mappedBy = "estacionamento", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     private List<Vaga>vagas;
 
     @OneToMany(mappedBy = "estacionamento", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private List<ListaVagas>listaVagas;
+
+    @OneToMany(mappedBy = "estacionamento", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Veiculo>listaVeiculos;
 
     @CreationTimestamp
     private Instant creationTimeStamp;

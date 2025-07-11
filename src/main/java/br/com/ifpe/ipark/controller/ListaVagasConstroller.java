@@ -1,7 +1,8 @@
 package br.com.ifpe.ipark.controller;
 
+
+import org.springframework.web.bind.annotation.CrossOrigin;
 import br.com.ifpe.ipark.dto.ListaVagasDTO;
-import br.com.ifpe.ipark.dto.VagaDTO;
 import br.com.ifpe.ipark.model.ListaVagas;
 import br.com.ifpe.ipark.service.ListaVagasService;
 import org.springframework.beans.BeanUtils;
@@ -13,9 +14,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:5173")
+
 @RestController
 @RequestMapping("/ListaVagas")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ListaVagasConstroller {
 
     @Autowired
@@ -49,13 +51,14 @@ public class ListaVagasConstroller {
         List<ListaVagas> vagaList = vagaService.buscarVagaFull();
 
         if (vagaList.isEmpty()) {
-            return ResponseEntity.badRequest().body("Nenhuma vaga cadastrada!");
+            return ResponseEntity.ok(vagaList);
         }
         return ResponseEntity.ok(vagaList);
     }
 
     @PutMapping("/updateVaga/{id}")
-    public ResponseEntity<Object> AtualizarVaga(@PathVariable Long id, @RequestBody VagaDTO vagaDTO, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<Object> AtualizarVaga(@PathVariable Long id, @RequestBody ListaVagasDTO vagaDTO, UriComponentsBuilder uriComponentsBuilder) {
+        System.out.println("ID recebido no Controller: " + id);
 
         ListaVagas vagaAtualizado = vagaService.atualizarVaga(id, vagaDTO);
         var uri = uriComponentsBuilder.path("/ListaVagas/{id}")

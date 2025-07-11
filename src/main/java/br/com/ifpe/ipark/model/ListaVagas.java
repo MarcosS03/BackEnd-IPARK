@@ -1,6 +1,8 @@
 package br.com.ifpe.ipark.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -14,13 +16,7 @@ public class ListaVagas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToOne(mappedBy = "listaVagas", cascade = CascadeType.ALL, orphanRemoval = true)
-    private VeiculoEstacionado veiculoEstacionado;
-
-
     private Long cadastroVagaID;
-
     private String tipoVaga;
     private String valor;
     private String quantidade;
@@ -28,8 +24,15 @@ public class ListaVagas {
 
     @ManyToOne
     @JoinColumn(name = "estacionamento_id", nullable = false)
-    @JsonIgnore
+    //@JsonIgnore
+    //@JsonBackReference
     private Estacionamento estacionamento;
+
+    @OneToOne
+    @JoinColumn( name = "veiculoEstacionadoID")
+    //@JsonIgnore
+    @JsonManagedReference
+    private VeiculoEstacionado veiculoEstacionado;
 
     @CreationTimestamp
     private Instant creationTimeStamp;
@@ -38,33 +41,21 @@ public class ListaVagas {
     @Column(insertable = false)
     private Instant updateTimeStamp;
 
-//    @ManyToOne
-//    @JoinColumn(name = "vagas_id")
-//    private Vaga vagas;
-
 
     public ListaVagas() {
     }
 
-    public ListaVagas(Long id, VeiculoEstacionado veiculoEstacionado, Long cadastroVagaID, String tipoVaga, String valor, String quantidade, String statuVaga, Estacionamento estacionamento, Instant creationTimeStamp, Instant updateTimeStamp) {
+    public ListaVagas(Long id, Long cadastroVagaID, String tipoVaga, String valor, String quantidade, String statuVaga, Estacionamento estacionamento, VeiculoEstacionado veiculoEstacionado, Instant creationTimeStamp, Instant updateTimeStamp) {
         this.id = id;
-        this.veiculoEstacionado = veiculoEstacionado;
         this.cadastroVagaID = cadastroVagaID;
         this.tipoVaga = tipoVaga;
         this.valor = valor;
         this.quantidade = quantidade;
         this.statuVaga = statuVaga;
         this.estacionamento = estacionamento;
+        this.veiculoEstacionado = veiculoEstacionado;
         this.creationTimeStamp = creationTimeStamp;
         this.updateTimeStamp = updateTimeStamp;
-    }
-
-    public Long getCadastroVagaID() {
-        return cadastroVagaID;
-    }
-
-    public void setCadastroVagaID(Long cadastroVagaID) {
-        this.cadastroVagaID = cadastroVagaID;
     }
 
     public VeiculoEstacionado getVeiculoEstacionado() {
@@ -73,6 +64,14 @@ public class ListaVagas {
 
     public void setVeiculoEstacionado(VeiculoEstacionado veiculoEstacionado) {
         this.veiculoEstacionado = veiculoEstacionado;
+    }
+
+    public Long getCadastroVagaID() {
+        return cadastroVagaID;
+    }
+
+    public void setCadastroVagaID(Long cadastroVagaID) {
+        this.cadastroVagaID = cadastroVagaID;
     }
 
     public String getTipoVaga() {

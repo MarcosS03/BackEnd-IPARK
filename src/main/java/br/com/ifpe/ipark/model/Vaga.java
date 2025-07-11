@@ -17,7 +17,6 @@ public class Vaga {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String tipoVaga;
     private String valor;
     private String quantidade;
