@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.mapping.ToOne;
 
 import java.time.Instant;
 
@@ -28,9 +29,8 @@ public class ListaVagas {
     //@JsonBackReference
     private Estacionamento estacionamento;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn( name = "veiculoEstacionadoID")
-    //@JsonIgnore
     @JsonManagedReference
     private VeiculoEstacionado veiculoEstacionado;
 

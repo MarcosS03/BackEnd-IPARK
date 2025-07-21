@@ -13,6 +13,7 @@ public record VeiculoEstacionadoDTO(
         @NotBlank(message = "Veiculo não informado")
         Veiculo veiculoID,
         String dataEntrada,
-        String HoraEntrada
+        String HoraEntrada,
+        String valorHora
 ) {
 }

@@ -24,9 +24,8 @@ public class VeiculoDesestacionadoController {
 
     @PostMapping("/insert")
     public ResponseEntity<Object> estacionarVeiculo(@RequestBody VeiculoDesestacionadoDTO veiculoDTO, UriComponentsBuilder uriComponentsBuilder) {
-
+        System.out.println("chegou no insert");
         VeiculoDesestacionado veiculo = veiculoService.save(veiculoDTO);
-
         var uri = uriComponentsBuilder.path("/veiculos/{id}")
                 .buildAndExpand(veiculo.getId())
                 .toUri();

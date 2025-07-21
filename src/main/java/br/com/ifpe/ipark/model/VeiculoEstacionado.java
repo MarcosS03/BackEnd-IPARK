@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 @Table(name = "veiculoEstacionado")
@@ -19,9 +20,9 @@ public class VeiculoEstacionado {
     @JsonIgnore
     private Estacionamento estacionamento;
 
-    @OneToOne(mappedBy = "veiculoEstacionado", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "veiculoEstacionado", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
-    private ListaVagas listaVagas;
+    private List<ListaVagas>listaVagas;
 
     @OneToOne
     @JoinColumn(name = "veiculo_id", nullable = false)
@@ -29,6 +30,7 @@ public class VeiculoEstacionado {
 
     private String dataEntrada;
     private String HoraEntrada;
+    private String valorHora;
 
     @CreationTimestamp
     private Instant creationTimeStamp;
@@ -49,15 +51,24 @@ public class VeiculoEstacionado {
     public VeiculoEstacionado() {
     }
 
-    public VeiculoEstacionado(Long id, Estacionamento estacionamento, ListaVagas listaVagas, Veiculo veiculo, String dataEntrada, String horaEntrada, Instant creationTimeStamp, Instant updateTimeStamp) {
+    public VeiculoEstacionado(Long id, Estacionamento estacionamento, List<ListaVagas> listaVagas, Veiculo veiculo, String dataEntrada, String horaEntrada, String valorHora, Instant creationTimeStamp, Instant updateTimeStamp) {
         this.id = id;
         this.estacionamento = estacionamento;
         this.listaVagas = listaVagas;
         this.veiculo = veiculo;
         this.dataEntrada = dataEntrada;
         HoraEntrada = horaEntrada;
+        this.valorHora = valorHora;
         this.creationTimeStamp = creationTimeStamp;
         this.updateTimeStamp = updateTimeStamp;
+    }
+
+    public String getValorHora() {
+        return valorHora;
+    }
+
+    public void setValorHora(String valorHora) {
+        this.valorHora = valorHora;
     }
 
     public void setId(Long id) {
@@ -76,11 +87,11 @@ public class VeiculoEstacionado {
         this.estacionamento = estacionamento;
     }
 
-    public ListaVagas getListaVagas() {
+    public List<ListaVagas> getListaVagas() {
         return listaVagas;
     }
 
-    public void setListaVagas(ListaVagas listaVagas) {
+    public void setListaVagas(List<ListaVagas> listaVagas) {
         this.listaVagas = listaVagas;
     }
 

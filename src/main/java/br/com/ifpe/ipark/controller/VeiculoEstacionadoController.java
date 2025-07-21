@@ -55,8 +55,10 @@ public class VeiculoEstacionadoController {
         return ResponseEntity.ok(veiculoList);
     }
 
-    @GetMapping("/sairEstacionamento")
-    public void sairEstacionamento(@PathVariable Long id) {
+    @DeleteMapping("/sairEstacionamento/{id}")
+    public ResponseEntity<Void> sairEstacionamento(@PathVariable Long id) {
         veiculoService.sairEstacionamento(id);
+        // Retorna um status 204 No Content, indicando sucesso sem corpo de resposta
+        return ResponseEntity.noContent().build();
     }
 }

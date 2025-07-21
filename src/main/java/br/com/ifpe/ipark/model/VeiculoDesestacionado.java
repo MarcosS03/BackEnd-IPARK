@@ -25,6 +25,10 @@ public class VeiculoDesestacionado {
     @JoinColumn(name = "veiculo_id")
     private Veiculo veiculo;
 
+    @OneToOne
+    @JoinColumn(name = "pagamento_id")
+    private Pagamentos pagamentos;
+
     private String dataEntrada;
     private String dataSaida;
     private String HoraEntrada;
@@ -42,11 +46,12 @@ public class VeiculoDesestacionado {
     public VeiculoDesestacionado() {
     }
 
-    public VeiculoDesestacionado(Long id, Estacionamento estacionamento, ListaVagas listaVagas, Veiculo veiculo, String dataEntrada, String dataSaida, String horaEntrada, String horaSaida, String valorPago, String tempoPermanecia, Instant creationTimeStamp, Instant updateTimeStamp) {
+    public VeiculoDesestacionado(Long id, Estacionamento estacionamento, ListaVagas listaVagas, Veiculo veiculo, Pagamentos pagamentos, String dataEntrada, String dataSaida, String horaEntrada, String horaSaida, String valorPago, String tempoPermanecia, Instant creationTimeStamp, Instant updateTimeStamp) {
         this.id = id;
         this.estacionamento = estacionamento;
         this.listaVagas = listaVagas;
         this.veiculo = veiculo;
+        this.pagamentos = pagamentos;
         this.dataEntrada = dataEntrada;
         this.dataSaida = dataSaida;
         HoraEntrada = horaEntrada;
@@ -55,6 +60,14 @@ public class VeiculoDesestacionado {
         this.tempoPermanecia = tempoPermanecia;
         this.creationTimeStamp = creationTimeStamp;
         this.updateTimeStamp = updateTimeStamp;
+    }
+
+    public Pagamentos getPagamentos() {
+        return pagamentos;
+    }
+
+    public void setPagamentos(Pagamentos pagamentos) {
+        this.pagamentos = pagamentos;
     }
 
     public Long getId() {
